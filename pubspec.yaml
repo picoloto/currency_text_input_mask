@@ -1,11 +1,11 @@
 name: currency_text_input_mask
 description: A Controller with mask for currency text input, basead on the currency_textfield package.
-version: 0.1.0
+version: 1.0.0
 author: Leandro Picoloto <picolotoleandro@gmail.com>
 homepage: https://github.com/picoloto/currency_text_input_mask
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
