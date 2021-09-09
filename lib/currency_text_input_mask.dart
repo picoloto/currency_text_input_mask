@@ -25,27 +25,28 @@ class CurrencyTextInputMaskController extends TextEditingController {
 
   String get thousandSymbol => _thousandSymbol;
 
-  CurrencyTextInputMaskController({String rightSymbol = "R\$ ",
+  CurrencyTextInputMaskController({
+    String rightSymbol = "R\$ ",
     String decimalSymbol = ",",
-    String thousandSymbol = "."})
-      : _leftSymbol = rightSymbol,
+    String thousandSymbol = ".",
+  })  : _leftSymbol = rightSymbol,
         _decimalSymbol = decimalSymbol,
         _thousandSymbol = thousandSymbol {
     addListener(_listener);
   }
 
-  String _getOnlyNumbers({String string}) =>
+  String _getOnlyNumbers({required String string}) =>
       string.replaceAll(_onlyNumbersRegex, "");
 
-  bool _isOnlyNumbers({String string}) {
+  bool _isOnlyNumbers({String? string}) {
     if (string == null || string.isEmpty) return false;
 
     final clearText = _getOnlyNumbers(string: string);
 
-    return clearText != null ? (clearText.length == string.length) : false;
+    return clearText.length == string.length;
   }
 
-  String _applyMaskTo({double value}) {
+  String _applyMaskTo({required double value}) {
     List<String> textRepresentation = value
         .toStringAsFixed(_numberOfDecimals)
         .replaceAll(".", "")
@@ -64,17 +65,17 @@ class CurrencyTextInputMaskController extends TextEditingController {
     return textRepresentation.reversed.join("");
   }
 
-  double _getDoubleValueFor({String string}) {
-    return (double.parse(string) ?? 0.0) / pow(10, _numberOfDecimals);
+  double _getDoubleValueFor({required String string}) {
+    return (double.tryParse(string) ?? 0.0) / pow(10, _numberOfDecimals);
   }
 
-  String _formatToNumber({String string}) {
+  String _formatToNumber({required String string}) {
     double value = _getDoubleValueFor(string: string);
 
     return _applyMaskTo(value: value);
   }
 
-  String _clear({String text}) {
+  String _clear({required String text}) {
     return text
         .replaceAll(_leftSymbol, "")
         .replaceAll(_thousandSymbol, "")
@@ -82,7 +83,7 @@ class CurrencyTextInputMaskController extends TextEditingController {
         .trim();
   }
 
-  _setSelectionBy({int offset}) {
+  _setSelectionBy({required int offset}) {
     selection = TextSelection.fromPosition(TextPosition(offset: offset));
   }
 
@@ -112,7 +113,7 @@ class CurrencyTextInputMaskController extends TextEditingController {
       return;
     }
 
-    if ((double.parse(clearText) ?? 0.0) == 0.0) {
+    if ((double.tryParse(clearText) ?? 0.0) == 0.0) {
       _previewsText = "";
       text = "";
       return;
