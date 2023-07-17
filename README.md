@@ -1,6 +1,7 @@
 # currency_text_input_mask
 
 A Controller with mask for currency text input, basead on the currency_textfield package.
+Migrate on null safety!
 
 ![sample](doc/gif.gif)
 
